@@ -1,6 +1,6 @@
 import './Login.css'
 import React, { useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { axiosInstance } from '../../axios'
 import useAuth from '../../hooks/useAuth'
 
@@ -69,7 +69,9 @@ function Login() {
                 <div className="toggle-panel toggle-right">
                     <h1>Welcome, Friend!</h1>
                     <p>Enter your personal details to use all of site features</p>
-                    <button id="register">Sign Up</button>
+                    <Link to={'/signup'}>
+                        <button id="register">Sign Up</button>
+                    </Link>
                 </div>
             </div>
         </div>

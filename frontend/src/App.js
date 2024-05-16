@@ -12,13 +12,13 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<PersistLogin />}>
+          
           <Route path='/' element={<AuthMiddleware />}>
             <Route index element={<Home />}></Route>
-          </Route>
-          <Route path='/auth'>
-            <Route path='login' element={<Login />}></Route>
-            <Route path='signup' element={<Signup />}></Route>
-          </Route>
+          </Route>        
+          <Route path='login' element={<Login />}></Route>
+          <Route path='signup' element={<Signup />}></Route>
+          
         </Route>
         <Route path='*' element={<Navigate to='/' />}></Route>
       </Routes>
