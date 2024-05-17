@@ -80,13 +80,8 @@ function Signup() {
         <div className="form-container sign-up">
             <form onSubmit={onSubmitForm}>
                 <h1>Create Account</h1>
-                <div className="social-icons">
-                    <a href="#" className="icon"><i className="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" className="icon"><i className="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" className="icon"><i className="fa-brands fa-github"></i></a>
-                    <a href="#" className="icon"><i className="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email for registeration</span>
+                
+                <span>use your email for registeration</span>
                 <input type="text" placeholder="FirstName" onChange={onFirstnameChange} />
                 <input type="text" placeholder="LastName" onChange={onLastnameChange} />
                 <input type="text" placeholder="Username" onChange={onUsernameChange} />
@@ -110,7 +105,7 @@ function Signup() {
                 </div>                
             </div>
         </div>
-    </div>  
+    </div>
     </div>
     )
 }

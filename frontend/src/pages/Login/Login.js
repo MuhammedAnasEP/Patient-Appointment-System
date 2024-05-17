@@ -62,13 +62,7 @@ function Login() {
         <div className="form-container sign-in">
             <form onSubmit={onSubmitForm}>
                 <h1>Sign In</h1>
-                <div className="social-icons">
-                    <a href="#" className="icon"><i className="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" className="icon"><i className="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" className="icon"><i className="fa-brands fa-github"></i></a>
-                    <a href="#" className="icon"><i className="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your username password</span>
+                <span>use your username password</span>
                 <input type="username" placeholder="Username" onChange={onUsernameChange}/>
                 <input type="password" placeholder="Password" onChange={onPasswordChange}/>
                 <button disabled={loading}>Sign In</button>
