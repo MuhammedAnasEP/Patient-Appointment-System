@@ -1,24 +1,33 @@
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from django.db.models import Q
 
 class RegistrationSerializer(serializers.ModelSerializer):
 
     password2 = serializers.CharField(style={"input_type": "password"}, write_only=True)
     
     class Meta:
-        model = get_user_model()
-        fields = ("username", "email", "password", "password2")
+
+        model = User
+        fields = ("first_name","last_name","username", "email", "password", "password2")
         extra_kwargs = {
             "password" : {"write_only": True},
             "password2" : {"write_only": True}
         }
 
+
     def save(self):
-        user = get_user_model()(
-            email=self.validated_data["email"],
+        email=self.validated_data["email"],
+        username=self.validated_data["username"],
+
+        if User.objects.filter(Q(username=username) | Q(email=email)):
+            raise serializers.ValidationError({"error":"username or email already exist"})
+        
+        user = User(
+            email=email,
             first_name=self.validated_data["first_name"],
             last_name=self.validated_data["last_name"],
-            username=self.validated_data["username"],
+            username=username,
         )
 
         password = self.validated_data["password"]
@@ -26,7 +35,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
         if password != password2:
             raise serializers.ValidationError(
-                {"password": "Passwords do not match!"})
+                {"error": "Passwords do not match!"})
 
         user.set_password(password)
         user.save()
@@ -41,5 +50,18 @@ class LoginSerializer(serializers.Serializer):
     
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
-        model = get_user_model()
+        model = User
         fields = ("username", "email")
+
+
+
+
+# {
+#     "first_name":"anas",
+#     "last_name":"ep",
+#     "username":"anas",
+#     "email":"anas@gmail.com",
+#     "password":"anas",
+#     "password2":"anas"
+
+# }

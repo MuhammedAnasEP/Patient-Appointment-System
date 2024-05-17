@@ -1,8 +1,21 @@
 import React, {useState} from 'react'
 import { Transition } from "@headlessui/react";
+import { Link, useNavigate } from 'react-router-dom';
+import useLogout from "../hooks/useLogout"
+
 
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const logout = useLogout()
+    const navigate = useNavigate()
+
+    async function onLogout() {
+
+
+      await logout()
+      navigate('/')
+  }
+
     return (
       <div>
         <nav className="bg-gray-800 w-full">
@@ -18,47 +31,27 @@ function Navbar() {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    <a
+                  <a
                       href="#"
                       className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"
                     >
-                      Home
+                      <Link to={'/home'}>Home</Link>
                     </a>
   
                     <a
-                      href="#"
+                      
                       className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                     >
-                      Add Patient
-                    </a>
-  
+                      <Link to={'/add-patient'}>Add Patient</Link>
+                    </a>     
                     <a
-                      href="#"
+                      
                       className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      onSubmit={onLogout}
                     >
-                      Login
-                    </a>
-  
-                    <a
-                      href="#"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Signup
-                    </a>
-  
-                    <a
-                      href="#"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Logout
+                      Logout  
                     </a>
                   </div>
-                </div>
-                <div class="flex items-center border border-gray-700 rounded-xl mx-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 pt-0.5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                    <input class="ml-2 outline-none bg-transparent text-white" type="text" name="search" id="search" placeholder="Search..." />
                 </div>
               </div>
               <div className="-mr-2 flex md:hidden">
@@ -120,37 +113,24 @@ function Navbar() {
             {(ref) => (
               <div className="md:hidden" id="mobile-menu">
                 <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                  <a
-                    href="#"
-                    className="hover:bg-gray-700 text-white block px-3 py-2 rounded-md text-base font-medium"
-                  >
-                    Home
-                  </a>
+                <a
+                      href="#"
+                      className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                    >
+                      <Link to={'/home'}>Home</Link>
+                    </a>
+  
+                    <a
+                      href="#"
+                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    >
+                      <Link to={'/add-patient'}>Add Patient</Link>
+                    </a>  
   
                   <a
-                    href="#"
+                    
                     className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                  >
-                    Add Patient
-                  </a>
-  
-                  <a
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                  >
-                    Login
-                  </a>
-  
-                  <a
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                  >
-                    Signup
-                  </a>
-  
-                  <a
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                    onSubmit={onLogout}
                   >
                     Logout
                   </a>

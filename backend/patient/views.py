@@ -1,15 +1,22 @@
 from django.db.models import Q
 from rest_framework import status
+from rest_framework.decorators import api_view
 from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
 from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from .models import Patient, Appointment
 from .serializers import PatientSerializer, AppointmentSerializer
+from rest_framework.permissions import IsAuthenticated
+import stripe
+from django.conf import settings
+
+# stripe.api_key = settings.API_KEY
 
 # Create your views here.
 
 class ListPatient(ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
     filter_backends = (SearchFilter,)
@@ -67,3 +74,13 @@ class BookAppointment(APIView):
         appontment = Appointment.objects.create(user = user.id, patient = patient.id, date=date, time=time, )
 
         return Response(serilizer.data)
+
+
+@api_view(['POST'])
+def payment(request, id):
+    patient = Patient.objects.get(id = id)
+    test_payment_intent = stripe.PaymentIntent.create(
+    amount=1000, currency='pln', 
+    payment_method_types=['card'],
+    receipt_email=patient.email)
+    return Response(status=status.HTTP_200_OK, data=test_payment_intent)

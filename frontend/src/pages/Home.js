@@ -5,7 +5,6 @@ import PatientList from '../components/PatientList'
 function Home() {
   return (
     <div>
-        <Navbar />
         <PatientList />
     </div>
   )

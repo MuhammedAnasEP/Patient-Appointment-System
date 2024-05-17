@@ -3,7 +3,8 @@ from django.conf import settings
 from django.middleware import csrf
 from rest_framework import exceptions as rest_exceptions, response, decorators as rest_decorators, permissions as rest_permissions
 from rest_framework_simplejwt import tokens, views as jwt_views, serializers as jwt_serializers, exceptions as jwt_exceptions
-from account import serializers, models
+from account import serializers
+from django.contrib.auth.models import User
 
 
 def get_user_tokens(user):
@@ -48,7 +49,7 @@ def loginView(request):
 
         res.data = tokens
         res["X-CSRFToken"] = csrf.get_token(request)
-        return response.Response(res.data)
+        return res
     raise rest_exceptions.AuthenticationFailed(
         "Email or Password is incorrect!")
 
@@ -122,8 +123,8 @@ class CookieTokenRefreshView(jwt_views.TokenRefreshView):
 @rest_decorators.permission_classes([rest_permissions.IsAuthenticated])
 def user(request):
     try:
-        user = models.Account.objects.get(id=request.user.id)
-    except models.Account.DoesNotExist:
+        user = User.objects.get(id=request.user.id)
+    except User.DoesNotExist:
         return response.Response(status_code=404)
 
     serializer = serializers.AccountSerializer(user)

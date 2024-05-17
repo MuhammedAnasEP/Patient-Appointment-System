@@ -8,6 +8,8 @@ function Signup() {
 
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
+    const [usernameerror, setUsernameError] = useState()
+    const [error, setError] = useState()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     const [username, setUsername] = useState()
@@ -53,7 +55,6 @@ function Signup() {
                 password,
                 password2: passwordConfirmation
             }))
-            console.log("hi")
             setEmail()
             setPassword()
             setUsername()
@@ -64,13 +65,18 @@ function Signup() {
     
         } catch (error) {
             setLoading(false)
-            // TODO: handle errors
+            if (error.response.status == 400){
+                setError(error.response.data.error)
+                setUsernameError(error.response.data.username[0])
+            }
+            
         }
     }
 
 
   return (
-    <div className="container" id="container">
+    <div className='outer'>
+        <div className="container" id="container">
         <div className="form-container sign-up">
             <form onSubmit={onSubmitForm}>
                 <h1>Create Account</h1>
@@ -88,6 +94,8 @@ function Signup() {
                 <input type="password" placeholder="Password" onChange={onPasswordChange} />
                 <input type="password" placeholder="Conirm Password" onChange={onPasswordConfirmationChange} />
                 <button>Sign Up</button>
+                <div>{error}</div>
+                <div>{usernameerror}</div>
             </form>
         </div>
 
@@ -103,6 +111,7 @@ function Signup() {
             </div>
         </div>
     </div>  
+    </div>
     )
 }
 
