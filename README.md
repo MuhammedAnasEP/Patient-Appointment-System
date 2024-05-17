@@ -1,6 +1,6 @@
 ### File setup Guide
 
-clone the project using - git clone https://github.com/MuhammedAnasEP/Patient-Appointment-System/
+clone the project using - git clone https://github.com/MuhammedAnasEP/Patient-Appointment-System.git
 
 ### Backend Setup Guide
 
